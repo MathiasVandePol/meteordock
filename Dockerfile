@@ -42,19 +42,6 @@ RUN cd $BUILD_SCRIPTS_DIR && \
 		bash $BUILD_SCRIPTS_DIR/install-node.sh && \
 		bash $BUILD_SCRIPTS_DIR/post-install-cleanup.sh
 
-# copy the app to the container
-ONBUILD COPY . $APP_SOURCE_DIR
-
-# optionally install Mongo or Phantom at app build time
-ONBUILD RUN bash $BUILD_SCRIPTS_DIR/install-phantom.sh
-ONBUILD RUN bash $BUILD_SCRIPTS_DIR/install-mongo.sh
-ONBUILD RUN bash $BUILD_SCRIPTS_DIR/install-graphicsmagick.sh
-
-# install Meteor, build app, clean up
-ONBUILD RUN cd $APP_SOURCE_DIR && \
-            bash $BUILD_SCRIPTS_DIR/install-meteor.sh && \
-            bash $BUILD_SCRIPTS_DIR/build-meteor.sh && \
-            bash $BUILD_SCRIPTS_DIR/post-build-cleanup.sh
 # Default values for Meteor environment variables
 ENV ROOT_URL http://localhost
 ENV MONGO_URL mongodb://127.0.0.1:27017/meteor
