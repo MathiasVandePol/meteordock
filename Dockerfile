@@ -49,7 +49,6 @@ RUN cd $APP_SOURCE_DIR && \
             bash $BUILD_SCRIPTS_DIR/post-build-cleanup.sh
 
 # fix tunnel-ssh npm missing module
-RUN cp -R $APP_BUNDLE_DIR/bundle/programs/server/npm/node_modules/tunnel-ssh $APP_BUNDLE_DIR/bundle/programs/server/npm/node_modules/meteor/modules-runtime/node_modules/
 
 EXPOSE 3000
 
