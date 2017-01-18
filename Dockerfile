@@ -30,7 +30,7 @@ ENV APP_BUNDLE_DIR /opt/meteor/dist
 ENV BUILD_SCRIPTS_DIR /opt/build_scripts
 
 # add entrypoint and build scripts
-COPY .docker $BUILD_SCRIPTS_DIR
+COPY scripts $BUILD_SCRIPTS_DIR
 RUN chmod -R 770 $BUILD_SCRIPTS_DIR
 
 # copy the app to the container
@@ -42,15 +42,20 @@ RUN cd $BUILD_SCRIPTS_DIR && \
 		bash $BUILD_SCRIPTS_DIR/install-node.sh && \
 		bash $BUILD_SCRIPTS_DIR/post-install-cleanup.sh
 
+# copy the app to the container
+ONBUILD COPY . $APP_SOURCE_DIR
+
+# optionally install Mongo or Phantom at app build time
+ONBUILD RUN bash $BUILD_SCRIPTS_DIR/install-phantom.sh
+ONBUILD RUN bash $BUILD_SCRIPTS_DIR/install-mongo.sh
+ONBUILD RUN bash $BUILD_SCRIPTS_DIR/install-graphicsmagick.sh
+
 # install Meteor, build app, clean up
-RUN cd $APP_SOURCE_DIR && \
+ONBUILD RUN cd $APP_SOURCE_DIR && \
             bash $BUILD_SCRIPTS_DIR/install-meteor.sh && \
             bash $BUILD_SCRIPTS_DIR/build-meteor.sh && \
             bash $BUILD_SCRIPTS_DIR/post-build-cleanup.sh
-
-# fix tunnel-ssh npm missing module
-RUN cp -R $APP_BUNDLE_DIR/bundle/programs/server/npm/node_modules/tunnel-ssh $APP_BUNDLE_DIR/bundle/programs/server/npm/node_modules/meteor/modules-runtime/node_modules/
-
+   
 EXPOSE 3000
 
 WORKDIR $APP_BUNDLE_DIR/bundle

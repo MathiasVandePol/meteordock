@@ -9,7 +9,8 @@ if [[ "${MONGO_URL}" == *"127.0.0.1"* ]]; then
     printf "\n[-] External MONGO_URL not found. Starting local MongoDB...\n\n"
     mongod --storageEngine=wiredTiger &
   else
-    echo "ERROR: Mongo not installed inside the container, try to set MONGO_URL env variable"
+    echo "ERROR: Mongo not installed inside the container."
+    echo "Rebuild with INSTALL_MONGO=true in your launchpad.conf or supply a MONGO_URL environment variable."
     exit 1
   fi
 fi
