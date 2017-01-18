@@ -1,5 +1,5 @@
 FROM debian:jessie
-MAINTAINER R.Sercan Özdemir <info@mongoclient.com>
+MAINTAINER Mathias Van de Pol
 
 RUN groupadd -r node && useradd -m -g node node
 
