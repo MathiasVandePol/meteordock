@@ -1,4 +1,4 @@
-/.git
-.meteor/local
-packages/*/.build*
-packages/*/.npm*
+.git
+build.sh
+circle.yml
+README.md

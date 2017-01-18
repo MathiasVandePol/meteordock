@@ -55,7 +55,7 @@ ONBUILD RUN cd $APP_SOURCE_DIR && \
             bash $BUILD_SCRIPTS_DIR/install-meteor.sh && \
             bash $BUILD_SCRIPTS_DIR/build-meteor.sh && \
             bash $BUILD_SCRIPTS_DIR/post-build-cleanup.sh
-   
+
 EXPOSE 3000
 
 WORKDIR $APP_BUNDLE_DIR/bundle
